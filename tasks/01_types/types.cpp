@@ -4,24 +4,17 @@
 // Сигнатуры в types.hpp менять нельзя.
 
 int DivideInts(int a, int b) {
-    (void)a;
-    (void)b;
-    return 0;
+    return a/b;
 }
 
 double DivideAsDouble(int a, int b) {
-    (void)a;
-    (void)b;
-    return 0;
+    return (double)a/b;
 }
 
 bool FitsInInt(long long value) {
-    (void)value;
-    return false;
+    return ((int)value==value);
 }
 
 long long SumAsLongLong(int a, int b) {
-    (void)a;
-    (void)b;
-    return 0;
+    return (long long)a+b;
 }

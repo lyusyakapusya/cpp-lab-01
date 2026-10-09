@@ -20,6 +20,15 @@ int main() {
     for (int i = 0; i < n; ++i) {
         int value = 0;
         std::cin >> value;
+        sum+=value;
+        if (!has_value) {
+            min_value = value;
+            max_value = value;
+            has_value = true;
+        }
+        max_value = std::max(value,max_value);
+        min_value = std::min(value,min_value);
+        if (value > 0) positive++;
 
         // TODO: обновите sum, positive, min_value, max_value и has_value.
         // positive считает числа строго больше нуля.
