@@ -6,6 +6,16 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 mkdir -p build
 
+if ! command -v g++ >/dev/null 2>&1; then
+    echo "Не найден компилятор g++. Проект собирается этой командой, не кнопкой в редакторе."
+    echo "Проверка: g++ --version"
+    echo "Linux:   sudo apt install build-essential"
+    echo "macOS:   xcode-select --install"
+    echo "Windows: терминал MSYS2 UCRT64, затем pacman -S --needed mingw-w64-ucrt-x86_64-gcc make"
+    echo "Подробности в README, раздел «Сборка»."
+    exit 1
+fi
+
 cxx=(g++ -std=c++20 -Wall -Wextra)
 only="${1:-all}"
 failed=0

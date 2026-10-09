@@ -42,15 +42,64 @@
 
 ## Сборка
 
-Нужен `g++` с поддержкой C++20. Подойдут VS Code с компилятором или CLion.
+Собрать проект — значит превратить `.cpp` в программу и запустить тесты. В редакторе нет кнопки Build: команда вводится в терминале. Откройте терминал в VS Code (Terminal → New Terminal) или обычный терминал и перейдите в папку, где лежит `Makefile`.
 
-Из корня репозитория:
+```bash
+git clone https://github.com/ivashka27/cpp-lab-01.git
+cd cpp-lab-01
+ls Makefile
+```
+
+`ls Makefile` печатает имя файла. Если пишет, что файла нет, терминал открыт не в той папке: ищите каталог `cpp-lab-01` и зайдите в него через `cd`.
+
+### Поставить компилятор
+
+Проверка, что компилятор уже есть:
+
+```bash
+g++ --version
+```
+
+Должна появиться строка вроде `g++ (GCC) ...`. Если команда не найдена, поставьте компилятор и откройте терминал заново.
+
+Linux:
+
+```bash
+sudo apt update
+sudo apt install -y build-essential
+```
+
+macOS:
+
+```bash
+xcode-select --install
+```
+
+Windows: обычные PowerShell и cmd не подходят. Поставьте [MSYS2](https://www.msys2.org/), откройте приложение **MSYS2 UCRT64** и выполните:
+
+```bash
+pacman -S --needed mingw-w64-ucrt-x86_64-gcc make
+```
+
+В VS Code на Windows выберите этот же терминал: Terminal → Select Default Profile → UCRT64. Иначе редактор открыт, а `g++` в его терминале по-прежнему нет.
+
+В CLion зелёная кнопка сборки для этого практикума не используется. Нужен терминал внизу окна и те же команды.
+
+### Запустить сборку и тесты
+
+Из папки с `Makefile`:
 
 ```bash
 make test
 ```
 
-Отдельная часть:
+Если `make` не найден, а `g++ --version` уже печатает версию:
+
+```bash
+bash scripts/test.sh
+```
+
+Одна часть, а не все четыре:
 
 ```bash
 make test-types
@@ -59,15 +108,37 @@ make test-loops
 make test-journal
 ```
 
-Та же сборка без `make`:
+Первый запуск обязан закончиться словом `FAILED`. Это собранный проект с пустыми функциями, а не сломанная установка. Смотрите на строку перед списком проверок.
+
+Собралось, тесты ещё не проходят — так и нужно, пока `TODO` пустые:
+
+```text
+== check_types ==
+FAIL DivideInts(5, 2) == 2
+...
+FAIL check_types
+FAILED
+```
+
+Не собралось — чинить компилятор или синтаксис, тесты ещё не запускались:
+
+```text
+== check_types ==
+FAIL check_types: compile
+```
+
+`g++: command not found` значит, что компилятор не установлен или открыт не тот терминал. `make: *** No targets specified` или `No such file or directory` у `Makefile` значит, что команда запущена не из корня репозитория.
+
+Собрать первое задание руками, без `make`:
 
 ```bash
+mkdir -p build
 g++ -std=c++20 -Wall -Wextra -o build/check_types \
   tasks/01_types/types.cpp tasks/01_types/check.cpp
 ./build/check_types
 ```
 
-Каталог `build/` в git не кладётся.
+`g++` читает два исходника и записывает программу в `build/check_types`. Вторая команда её запускает. Каталог `build/` в git не кладётся: это результат сборки, не решение.
 
 ## Задание 1. Типы
 
